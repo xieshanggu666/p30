@@ -1,3 +1,44 @@
+import * as echarts from 'echarts';
+
+let _patched = false;
+
+function patchEChartsSetOption() {
+  if (_patched) return;
+  _patched = true;
+  const origSetOption = echarts.ECharts.prototype.setOption;
+  echarts.ECharts.prototype.setOption = function(option, notMerge, lazyUpdate) {
+    const result = origSetOption.call(this, option, notMerge, lazyUpdate);
+    hideBackButton(this);
+    return result;
+  };
+  const origRender = echarts.ECharts.prototype._render;
+  if (origRender) {
+    echarts.ECharts.prototype._render = function() {
+      const result = origRender.apply(this, arguments);
+      hideBackButton(this);
+      return result;
+    };
+  }
+}
+
+function hideBackButton(chart) {
+  try {
+    const toolboxModel = chart.getModel().getComponent('toolbox');
+    if (toolboxModel && toolboxModel.iconPaths && toolboxModel.iconPaths.back) {
+      const backPath = toolboxModel.iconPaths.back;
+      backPath.hide();
+      backPath.ignore = true;
+      if (backPath.parent) {
+        backPath.parent.remove(backPath);
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+}
+
+patchEChartsSetOption();
+
 export function getLineEmphasis(colorRgb) {
   const emphasis = {
     focus: 'series',
@@ -60,7 +101,10 @@ export function getZoomToolbox() {
         yAxisIndex: 'none',
         title: {
           zoom: '区域缩放',
-          back: '还原缩放'
+          back: ''
+        },
+        icon: {
+          back: 'path://'
         },
         iconStyle: {
           borderColor: '#606266'
@@ -101,20 +145,15 @@ export function getZoomToolbox() {
 export function hideToolboxBackButton(chart) {
   if (!chart) return;
   try {
-    const zr = chart.getZr();
-    if (!zr || !zr.storage) return;
-    const displayList = zr.storage.getDisplayList(true);
-    for (let i = 0; i < displayList.length; i++) {
-      const el = displayList[i];
-      if (el && el.type === 'group' && el.__toolboxFeatureName === 'dataZoom') {
-        const children = el.children();
-        if (children && children.length >= 2) {
-          const backEl = children[1];
-          if (backEl) {
-            backEl.hide();
-          }
+    const toolboxModel = chart.getModel().getComponent('toolbox');
+    if (toolboxModel && toolboxModel.iconPaths) {
+      const backPath = toolboxModel.iconPaths.back;
+      if (backPath) {
+        backPath.hide();
+        backPath.ignore = true;
+        if (backPath.parent) {
+          backPath.parent.remove(backPath);
         }
-        break;
       }
     }
   } catch (e) {
@@ -124,9 +163,9 @@ export function hideToolboxBackButton(chart) {
 
 export function bindToolboxZoom(chartInstance) {
   if (!chartInstance) return;
-  chartInstance.on('rendered', function onRendered() {
+  hideToolboxBackButton(chartInstance);
+  chartInstance.on('rendered', function() {
     hideToolboxBackButton(chartInstance);
-    chartInstance.off('rendered', onRendered);
   });
 }
 
@@ -148,6 +187,15 @@ export function enhanceChartOption(option, existingToolbox) {
       dataZoom: getZoomToolbox().feature.dataZoom,
       restore: getZoomToolbox().feature.restore
     };
+  } else {
+    const dz = option.toolbox.feature.dataZoom;
+    if (dz) {
+      dz.icon = { ...(dz.icon || {}), back: 'path://' };
+      dz.title = { ...(dz.title || {}), back: '' };
+    }
+    if (!option.toolbox.feature.restore) {
+      option.toolbox.feature.restore = getZoomToolbox().feature.restore;
+    }
   }
 
   if (option.series) {

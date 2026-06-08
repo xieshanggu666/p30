@@ -7,6 +7,7 @@ import * as echarts from 'echarts'
 import { watch, reactive, onUnmounted } from 'vue'
 import http from "@/api/http.js"
 import chartFilter from "@/uitils/chartFilterY"
+import { bindToolboxZoom } from "@/uitils/chartEnhance"
 
 let chart;
 const props = defineProps({
@@ -44,6 +45,7 @@ onUnmounted(() => {
 function initChart(config) {
     chart = echarts.init(document.getElementById(props.id))
     chart.setOption(config);
+    bindToolboxZoom(chart);
 }
 
 function pageInit() {

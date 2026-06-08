@@ -10,6 +10,7 @@
 import * as echarts from "echarts";
 import http from "@/api/http.js";
 import ChartFilter from "@/uitils/chartFilter.js";
+import { bindToolboxZoom } from "@/uitils/chartEnhance";
 import { reactive, computed, ref, onMounted, onUnmounted, watch } from "vue";
 let chart = null;
 const yNumer = ref(0);
@@ -97,14 +98,8 @@ function initChart(compileData) {
       bottom: "2%",
       containLabel: true,
     },
-    dataZoom: [
-      {
-        id: "dataZoomX",
-        type: "inside",
-        xAxisIndex: [0],
-        filterMode: "filter",
-      },
-    ],
+    dataZoom: compileData.dataZoom,
+    toolbox: compileData.toolbox,
     xAxis: [
       {
         type: "time",
@@ -199,8 +194,7 @@ function initChart(compileData) {
     ],
     series: compileData.series,
   });
-  // console.log("chart",chart.setOption.xAxis);
-  // console.log("chart",compileData.series);
+  bindToolboxZoom(chart);
 }
 function clearChart() {
   if (!chart) {
