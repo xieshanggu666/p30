@@ -1,0 +1,22 @@
+双击run.bat启动异常：
+    使用cmd输入node -v查看版本，如果是18.+版本,请将package.json中第五行scripts中的内容替换为：
+
+"scripts": {
+    "serve": " SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
+}
+
+
+// 初次 安装项目npn install 报错问题 
+1：  如果项目存在  package-lock.json   删除
+2： 如果存在yarn.lock   删除
+3: 第一种方法 ： 使用 npm install --legacy-peer-deps  这个是npm 兼容问题  这个推荐 不会修改源代码使用问题
+
+ 4： 第二种方法echarts-gl： 依赖于 echarts@^4.1.0，但你的项目中安装的是 echarts@5.6.0，版本不兼容导致的依赖冲突。
+或者 将 echarts 降级到与 echarts-gl 兼容的版本4.9.0
+
+上面的操作后，如果是使用当前方法，会提示 eslint 报错  使用 npm install eslint@6.8.0 --save-dev --legacy-peer-deps  即可解决，因为我这里会在package.json中添加 eslint6.8.0 解决
+
+

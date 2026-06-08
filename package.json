@@ -1,0 +1,92 @@
+{
+  "name": "vol.vue3",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
+    "@kjgl77/datav-vue3": "^1.7.4",
+    "@microsoft/signalr": "^6.0.4",
+    "@videojs/http-streaming": "^3.7.0",
+    "axios": "^0.21.1",
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
+    "core-js": "^3.6.5",
+    "dplayer": "^1.27.1",
+    "echarts": "^5.0.2",
+    "echarts-gl": "^1.1.0",
+    "element-plus": "^2.2.14",
+    "eslint-plugin-vue": "^9.28.0",
+    "heatmap.js": "^2.0.5",
+    "hls.js": "^1.4.12",
+    "less": "^4.1.1",
+    "mathjs": "^15.2.0",
+    "moment": "^2.29.4",
+    "mqtt": "^4.3.7",
+    "pcm-player": "^0.0.15",
+    "recorder-core": "^1.2.23020100",
+    "three": "^0.147.0",
+    "three-orbitcontrols-ts": "^0.1.2",
+    "video.js": "^8.6.1",
+    "videojs-contrib-hls": "^5.15.0",
+    "vue": "^3.2.37",
+    "vue-count-to": "^1.0.13",
+    "vue-draggable-next": "^2.0.1",
+    "vue-router": "^4.0.0-0",
+    "vue-seamless-scroll": "^1.1.23",
+    "vuex": "^4.0.0-0",
+    "wangeditor": "^4.7.6",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-unit-mocha": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "babel-eslint": "^10.1.0",
+    "chai": "^4.1.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^6.8.0",
+    "less": "^4.1.1",
+    "less-loader": "^7.3.0",
+    "postcss-plugin-px2rem": "^0.8.1",
+    "sass": "1.26.8",
+    "sass-loader": "8.0.2",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/standard"
+    ],
+    "rules": {
+      "indent": [
+        1,
+        4
+      ]
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "eslintIgnore": [
+    "*"
+  ]
+}

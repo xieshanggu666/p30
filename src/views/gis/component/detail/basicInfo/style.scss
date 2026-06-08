@@ -1,0 +1,215 @@
+::-webkit-scrollbar {
+  background-color: #11305f;
+}
+
+.basic-info {
+  position: relative;
+
+  .ul-list {
+    display      : flex;
+    align-items  : center;
+    margin-bottom: 20px;
+
+    >li {
+      height          : 140px;
+      width           : 292px;
+      display         : flex;
+      background-color: #fff;
+      font-size       : 14px;
+      position        : relative;
+      list-style      : none;
+      // border-radius: $border-radius;
+      margin-right    : 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .left {
+        width: 109px;
+      }
+    }
+
+    .info {
+      padding-top: 50px;
+
+      .number {
+        color        : #ffffff !important;
+        font-size    : 20px;
+        margin-bottom: 10px;
+        line-height  : 20px;
+
+        &.green {
+          color: #fd5c56;
+        }
+
+        &.red {
+          color    : #fdb925;
+          // cursor: pointer;
+        }
+
+        &.orange {
+          color: #24e7c9;
+        }
+
+        &.purple {
+          color    : #8150ff;
+          // cursor: pointer;
+        }
+      }
+
+      .font {
+        color  : #ffffff !important;
+        //color: #4c4c4c;
+      }
+    }
+
+    .more {
+      display  : none;
+      cursor   : pointer;
+      position : absolute;
+      top      : 10px;
+      right    : 17px;
+      font-size: 16px;
+      // color: $pllh-color4;
+    }
+  }
+
+  .middle {
+    display      : flex;
+    height       : 300px;
+    margin-bottom: 20px;
+    color        : #ffffff;
+
+    .group-info {
+      width         : 292px;
+      height        : 100%;
+      background    : #0c2751;
+      padding       : 15px;
+      box-sizing    : border-box;
+      margin-right  : 20px;
+      display       : flex;
+      flex-direction: column;
+
+      .group-box {
+        border       : 1px solid #123874;
+        border-bottom: 0;
+
+        p {
+          display      : flex;
+          align-items  : center;
+          border-bottom: 1px solid #123874;
+
+          span {
+            padding: 10px 10px;
+
+            &:nth-child(1) {
+              flex      : 1;
+              background: #11305f;
+            }
+
+            &:nth-child(2) {
+              flex         : 2;
+              overflow     : hidden;
+              white-space  : nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+
+      .group-m-box {
+        flex         : 1;
+        border-bottom: 1px solid #123874;
+        overflow-y   : auto;
+      }
+    }
+
+    .title {
+      padding-left   : 12px;
+      //   background: url("../../../../assets/images/content/diagonalLine.png")
+      //     no-repeat left bottom;
+    }
+
+    .title-left {
+      display      : flex;
+      margin-bottom: 10px;
+    }
+
+    .point-table {
+      flex          : 1;
+      padding       : 15px;
+      background    : #0c2751;
+      box-sizing    : border-box;
+      display       : flex;
+      flex-direction: column;
+      width         : calc(100% - 320px);
+
+      .cell-row-point {
+        .el-table {
+          border: 1px solid #123874;
+
+          .el-table__body-wrapper {
+            background-color: #11305f;
+
+            span {
+              color: #ffffff;
+            }
+          }
+
+          &:after {
+            background-color: initial;
+          }
+
+          &:before {
+            background-color: initial;
+          }
+        }
+
+        thead {
+          tr {
+            background-color: #11305f !important;
+            color           : #ffffff;
+
+            th {
+              background-color: #11305f !important;
+              border          : 1px solid #123874;
+            }
+          }
+        }
+
+        .el-pagination {
+          border: 1px solid #123874;
+
+          span {
+            color: #ffffff !important;
+          }
+
+          .btn-prev {
+            background-color: #11305f !important;
+            border          : 1px solid #123874;
+          }
+
+          .el-pager {
+            li {
+              background-color: #11305f !important;
+              color           : #ffffff;
+            }
+          }
+
+          .btn-next {
+            background-color: #11305f !important;
+            border          : 1px solid #123874;
+          }
+
+          .el-input__inner {
+            background: #11305f;
+            border    : 1px solid #3081ff;
+            color     : #ffffff;
+          }
+        }
+      }
+    }
+  }
+
+}

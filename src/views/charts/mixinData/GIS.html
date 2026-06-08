@@ -1,0 +1,330 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="/public/static/Cesium/Widgets/widgets.css">
+    <script src="/public/Cesium/Cesium.js"></script>
+
+    <script src="/public/static/Cesium/viewerCesiumNavigationMixin.min.js"></script>
+    <style>
+        html, body, #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <style>
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            display: flex;
+            padding: 0;
+        }
+
+        #stateShow {
+            width: 200px;
+            height: 150px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            background: #18363ff0;
+            color: white;
+            font-size: 17px;
+            z-index:9999;
+        }
+
+            #stateShow div {
+                padding: 10px;
+            }
+    </style>
+    
+        <div id="stateShow">
+            <div>标题：<span id="title"></span></div>
+            <div>状态：<span id="state"></span></div>
+            <div>信息：<span id="info"></span></div>
+        </div>
+    
+
+
+    <div>
+        <input type="button" value="测试FlyTo" onclick="fly()" />
+        <input type="button" value="测试标记" onclick="loadPoint()" />
+    </div>
+    <div id="cesiumContainer"></div>
+    <script>
+    Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZGFjNDYwYy1jZDI5LTQ5OGYtYmIxOS0wZjU0ZmM3YjhiMjMiLCJpZCI6ODYwNTgsImlhdCI6MTY0NzQ4MTM5MH0.yZJqpA0VgfY0Jk3IhRUxHitgA4Oiwy1nnEambPo_qI0";
+    window.viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false,
+        baseLayerPicker: false,
+        vrButton: false,
+        geocoder: true,
+        timeline: false,
+        sceneModePicker: false,//切换三维/2维
+        navigationHelpButton: false,
+        navigationInstructionsInitiallyVisible: false,
+        infoBox: false,
+        fullscreenButton: false,
+        selectionIndicator: false,
+        homeButton: false,
+        scene3DOnly: false,
+
+        //加载天地图影像
+        //imageryProvider: new Cesium.UrlTemplateImageryProvider({
+        //    url: "https://t{s}.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=1d607a8dea50f6bd7d8d2fb17262a21e",
+        //    subdomains: ["0", "1", "2", "3", "4", "5", "6", "7"],
+        //    tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        //    maximumLevel: 18,
+        //}),
+
+    });
+    window.viewer.extend(Cesium.viewerCesiumNavigationMixin);
+    window.viewer.scene.globe.showGroundAtmosphere = false;
+    window.viewer.scene.skyAtmosphere.show = false;
+    window.viewer.scene.sun.show = false;
+    window.viewer.scene.moon.show = false;
+    window.viewer.scene.skyBox.show = false;
+    window.viewer.scene.globe.depthTestAgainstTerrain = true;//是否三维仿真
+
+
+    //加载高德底图
+    //let tdtLayer = new Cesium.UrlTemplateImageryProvider({
+    //    url: "http://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}",
+    //    minimumLevel: 3,
+    //    maximumLevel: 18,
+    //});
+    //window.viewer.imageryLayers.addImageryProvider(tdtLayer);
+
+
+    //加载天地图底图
+    // let tdt_Layer = new Cesium.UrlTemplateImageryProvider({
+    //     url: "https://t{s}.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=1d607a8dea50f6bd7d8d2fb17262a21e",
+    //     subdomains: ["0", "1", "2", "3", "4", "5", "6", "7"],
+    //     tilingScheme: new Cesium.WebMercatorTilingScheme(),
+    //     maximumLevel: 18,
+    // });
+    //var ibo= window.viewer.imageryLayers.addImageryProvider(tdt_Layer);
+    // window.viewer.imageryLayers.lowerToBottom(ibo);
+
+
+    ////加载高清地图
+    let hd_dt = new Cesium.ArcGisMapServerImageryProvider({
+        url: "https:/services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
+    });
+    window.viewer.imageryLayers.addImageryProvider(hd_dt);
+
+    //加载行政区域
+    //let labelMap = new Cesium.UrlTemplateImageryProvider({
+    //    url: "https://t{s}.tianditu.gov.cn/DataServer?T=cia_w&x={x}&y={y}&l={z}&tk=1d607a8dea50f6bd7d8d2fb17262a21e",
+    //    subdomains: ["0", "1", "2", "3", "4", "5", "6", "7"],
+    //    tilingScheme: new Cesium.WebMercatorTilingScheme(),
+    //    maximumLevel: 10,
+    //});
+    //window.viewer.imageryLayers.addImageryProvider(labelMap);
+
+    //初始化地形（创建世界地形）
+    let terrainProvider = new Cesium.createWorldTerrain({
+        requestWaterMask: true,
+        requestVertexNormals: true,
+    })
+    window.viewer.terrainProvider = terrainProvider;
+
+
+    //加载.terrain格式覆盖物
+    //window.viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
+    //    url: "/222/", // 地址记得换成自己的地形数据地址 http://localhost:1280/
+    //    requestWaterMask: false, // 开启法向量
+    //    requestVertexNormals: false // 开启水面特效
+    //});
+
+
+    function fly() {
+        var centeropt = { "y": 31.672187, "x": 117.287423, "z": 1455.4, "heading": 357.8, "pitch": -70.5, "roll": 360 };
+        let localPointData = {
+            destination: Cesium.Cartesian3.fromDegrees(centeropt.x, centeropt.y, centeropt.z || 0), //经度、纬度、高度
+            orientation: {
+                heading: Cesium.Math.toRadians(centeropt.heading || 0),                          //绕垂直于地心的轴旋转
+                pitch: Cesium.Math.toRadians(centeropt.pitch || -Cesium.Math.PI_OVER_FOUR),      //绕纬度线旋转
+                roll: Cesium.Math.toRadians(centeropt.roll || 0)                                 //绕经度线旋转
+            }
+        };
+        window.viewer.camera.flyTo(localPointData);
+    }
+
+    //加载图片覆盖物
+    function loadPoint() {
+        let billboardObj = new Cesium.BillboardGraphics({
+            image: "/public/4-on.png",
+            color: Cesium.Color.WHITE.withAlpha(1),
+            height: 52,
+            width: 44,
+            rotation: 0,
+            sizeInMeters: false,
+            show: true,
+            scale: 1.0,
+            disableDepthTestDistance: 50000,
+            verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+        });
+        const description = JSON.stringify("{'names':'twtw'}");
+        window.viewer.entities.add({
+            id: parseInt('443'),
+            name: "monitorPoint",
+            position: Cesium.Cartesian3.fromDegrees(
+                parseFloat('117.287423'),
+                parseFloat('31.672187'),
+            ),
+            description,
+            billboard: billboardObj,
+            label: {
+                text: "twtw33",
+                font: '14pt Source Han Sans CN', // 字体样式
+                fillColor: Cesium.Color.write, // 字体颜色
+                style: Cesium.LabelStyle.FILL, // label样式
+                outlineWidth: 2,
+                verticalOrigin: Cesium.VerticalOrigin.CENTER, // 垂直位置
+                pixelOffset: new Cesium.Cartesian2(0, -68) // 偏移
+            }
+        });
+
+        InitHandlerPointer();
+        InitHandlerLablelClick();
+
+    }
+
+    //鼠标移动变手形
+    function InitHandlerPointer() {
+        const handler = new this.Cesium.ScreenSpaceEventHandler(window.viewer.scene.canvas);
+        handler.setInputAction(function (movement) {
+            const pickedObject = viewer.scene.pick(movement.endPosition);
+            if (window.Cesium.defined(pickedObject)) {
+                window.viewer._container.style.cursor = "pointer";
+            } else {
+                window.viewer._container.style.cursor = "default";
+            }
+        }, window.Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    }
+
+    //加载点击事件
+    function InitHandlerLablelClick() {
+
+        const handler = new Cesium.ScreenSpaceEventHandler(window.viewer.scene.canvas);
+        handler.setInputAction(function (click) {
+            const pick = window.viewer.scene.pick(click.position);
+            document.getElementById('stateShow').style.display = "none";
+            if (pick && pick.id) {
+                if (pick.id.name == "monitorPoint") {
+                    // alert('dd');
+                    console.log(pick.id);
+                    console.log(pick.id.description._value);                  
+                    Popupposition(pick);
+                    //window.viewer.scene.postRender.addEventListener(windowPosition);
+                    //window.viewer.clock.onTick.addEventListener(windowPosition);
+                    //var point = [117.28742, 31.672187];
+                    //var popupCartesian = window.Cesium.Cartesian3.fromDegrees(point[0], point[1], 0);
+
+                    //var position = window.Cesium.SceneTransforms.wgs84ToWindowCoordinates(window.viewer.scene, popupCartesian);
+
+                    //var obj = { position: position, content: content };
+                }
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+    }
+
+
+    function Popupposition(e) {
+        //经纬度转为世界坐标
+        let gisPosition = Cesium.Cartesian3.fromDegrees(
+            117.287423,
+            31.672187,
+            0
+        );
+        document.getElementById('stateShow').style.display = 'block' //弹出信息框
+        //实时更新位置
+        viewer.scene.postRender.addEventListener(() => {
+            //转化为屏幕坐标
+            var windowPosition = Cesium.SceneTransforms.wgs84ToWindowCoordinates(viewer.scene, gisPosition);
+            document.getElementById('stateShow').style.left = (windowPosition.x - 100) + 'px'
+            document.getElementById('stateShow').style.top = (windowPosition.y - 210) + 'px'
+
+            //解决滚动不隐藏问题
+            const camerPosition = viewer.camera.position;
+            let height = viewer.scene.globe.ellipsoid.cartesianToCartographic(camerPosition).height;
+            height += viewer.scene.globe.ellipsoid.maximumRadius;
+            if ((!(Cesium.Cartesian3.distance(camerPosition, gisPosition) > height)) && viewer.camera.positionCartographic.height < 50000000) {
+                document.getElementById('stateShow').style.display = "block"
+            } else {
+                document.getElementById('stateShow').style.display = "none"
+            }
+
+        })
+    }
+    </script>
+    <style>
+        .cesium-viewer-bottom {
+            display: none !important;
+        }
+
+        .cesium-viewer-toolbar {
+            top: -20vw !important;
+        }
+    </style>
+
+    <style scoped lang="scss">
+    .c-map {
+        .cesium-map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            ::v-deep* {
+                box-sizing: content-box;
+            }
+        }
+    }
+
+    .cesium-viewer-animationContainer {
+        display: none;
+    }
+    .cesium-timeline-bar {
+        display: none;
+    }
+    .cursor-pointer{
+        cursor: pointer;
+    }
+
+    .map-info-window{
+        position: absolute;
+        z-index: 10;
+    }
+    .c-3dtile-view{
+        width: 70px;
+        height: 70px;
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        color: #1095dd;
+        background: #09162d;
+        border-radius: 100px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        z-index: 100;
+        line-height: 70px;
+        text-align: center;
+        cursor: pointer;
+        &:hover{
+            background: #19264d;
+        }
+    }
+</style>
+</body>
+</html>

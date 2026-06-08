@@ -1,0 +1,163 @@
+.monitorGroup {
+  height     : 772px;
+  overflow-y : auto;
+  border     : none;
+  user-select: none;
+
+
+
+  .title-box {
+    width          : 300px;
+    display        : flex;
+    justify-content: space-between;
+  }
+
+  .button-box {
+    display        : flex;
+    justify-content: space-around;
+    padding        : 1em 0;
+  }
+
+  .device-detail-box {
+    display: flex;
+  }
+
+  .box-li {
+    flex      : 1;
+    text-align: center;
+  }
+
+  .img-icon {
+    width        : 52px;
+    margin-bottom: 6px;
+  }
+
+  .num-box {
+    display: inline-block;
+    width  : 14px;
+  }
+
+}
+
+#menu-box {
+  user-select: none;
+
+
+  .el-collapse-item {
+    ul {
+      margin-top: 12px;
+
+      li {
+        display        : flex;
+        justify-content: space-between;
+        padding        : 4px 8px;
+
+        line-height    : 40px;
+        border-bottom  : 1px solid #999999;
+        margin         : 8px 12px;
+        cursor         : pointer;
+      }
+    }
+  }
+
+  .el-collapse {
+    border: none;
+
+    .is-active {
+      .el-collapse-item__header {
+        background: #3081ff;
+        color     : #ffffffff;
+      }
+
+      .el-collapse-item__wrap {
+        background: rgba(139, 171, 236, 0.3);
+        border    : none;
+      }
+    }
+  }
+
+  .el-collapse-item__header {
+    padding-left: 30px;
+    background  : #536e9c;
+    color       : #ffffff93;
+    border      : none;
+  }
+
+  .el-collapse-item__wrap {
+    background: rgba(139, 171, 236, 0.3);
+    border    : none;
+  }
+
+  .el-collapse-item__content {
+    color: #ffffff;
+  }
+
+  .el-tabs {
+    background: none;
+    border    : none;
+
+    .el-tabs__nav-scroll {
+      border-bottom: 1px solid #3081FF;
+    }
+
+    .el-tabs__content {
+      height        : 720px;
+      padding-bottom: 30px;
+    }
+
+    .el-tabs__nav {
+      border: none;
+    }
+
+    .is-top {
+      border: none;
+    }
+
+    .el-tabs__item.is-active {
+      border    : none;
+      background: #536e9c;
+      color     : #ffffff;
+    }
+
+    #pane-monitorGroup {
+      height: 692px;
+    }
+  }
+
+  .el-tabs__header {
+    background: none;
+  }
+}
+
+
+
+
+.partFuntion {
+  .el-collapse-item__content {
+    padding: 14px 10px;
+  }
+
+  .bar {
+    margin-bottom: 10px;
+
+    .el-row {
+      height: 40px;
+    }
+
+    .el-radio {
+      color: #ffffff;
+
+    }
+
+    .el-radio.is-checked {
+      background: #ffffff;
+    }
+  }
+
+}
+
+.device-box {
+  .svg-icon {
+    margin-right: 6px;
+  }
+}

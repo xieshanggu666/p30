@@ -1,0 +1,121 @@
+.home {
+    position         : fixed;
+    width            : 1920px;
+    height           : 1080px;
+    left             : 0;
+    top              : 0;
+    z-index          : 10;
+    background-size  : 100% 100%;
+    background-repeat: no-repeat;
+    perspective      : 1000px;
+
+    .content {
+        display: flex;
+
+        .el-progress-bar__outer {
+            background-color: rgb(135 136 137 / 40%);
+        }
+
+
+
+        .middle {
+            flex   : 1;
+            padding: 0 40px;
+
+            .middle-top {
+                height  : 613px;
+                position: relative;
+
+                //display: flex;
+                //justify-content: center;
+                //align-items: center;
+                .content {
+                    position           : absolute;
+                    bottom             : 0;
+                    height             : 428px;
+                    width              : 100%;
+                    background-position: center;
+                    background-repeat  : no-repeat;
+                    text-align         : center;
+                    display            : block;
+                    //flex-wrap: wrap;
+                    //font-size: 120px;
+                    font-family        : PingFang SC;
+                    font-weight        : 400;
+                    color              : #ffffff;
+
+                    .content-block {
+                        position: relative;
+                        bottom  : 40px;
+                    }
+
+                    #content-block {
+                        span {
+                            margin: 0;
+                            width : auto;
+                        }
+                    }
+
+                    .block-font {
+                        font-size    : 36px;
+                        border-bottom: 1px solid #ffffff;
+                        padding      : 30px 0 18px 0;
+                        line-height  : 32px;
+                    }
+
+                    .block-title {
+                        font-size  : 24px;
+                        padding-top: 14px;
+                    }
+
+                    .block-0,
+                    .block-1,
+                    .block-2,
+                    .block-3 {
+                        height             : 142px;
+                        width              : 303px;
+                        background-position: center;
+                        background-repeat  : no-repeat;
+                        display            : inline-block;
+                        padding            : 0 28px;
+                        box-sizing         : border-box;
+                    }
+
+                    .block-0 {
+                        margin-right : 40px;
+                        margin-bottom: 30px;
+                    }
+
+                    .block-1 {
+                        margin-bottom: 30px;
+                    }
+
+                    .block-2 {
+                        margin-right: 40px;
+                    }
+
+                    span {
+                        margin-top     : 140px;
+                        width          : 89px;
+                        margin-right   : 10px;
+                        color          : #fff;
+                        display        : flex;
+                        justify-content: center;
+                        align-items    : center;
+                    }
+                }
+            }
+
+            .middle-bottom {
+                .echarts-box {
+                    height: 320px;
+                }
+            }
+        }
+
+
+
+
+    }
+
+}
