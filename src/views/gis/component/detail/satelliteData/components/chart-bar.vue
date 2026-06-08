@@ -98,7 +98,7 @@ export default {
                     }
                 },
                 dataZoom: getZoomDataZoom(),
-    toolbox: getZoomToolbox(),,
+    toolbox: getZoomToolbox(),
                 series: this.series
             })
 

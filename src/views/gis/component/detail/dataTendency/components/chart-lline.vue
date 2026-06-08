@@ -89,7 +89,7 @@ export default {
                     containLabel: true
                 },
                 dataZoom: getZoomDataZoom(),
-    toolbox: getZoomToolbox(),,
+                toolbox: getZoomToolbox(),
                 xAxis: [{
                     type: 'time',
                     boundaryGap: false,
