@@ -53,15 +53,15 @@ export function getZoomDataZoom(xAxisIndex = 0) {
   ];
 }
 
-const ZOOM_ICON_SVG = 'path://M618.496 128H480c-17.664 0-32 14.336-32 32s14.336 32 32 32h60.8l-89.6 89.6c-45.824-33.152-101.76-52.8-162.048-52.8C233.6 228.8 112 350.4 112 500.8s121.6 272 271.552 272c149.952 0 271.552-121.6 271.552-272 0-60.288-19.68-116.224-52.8-162.048l89.6-89.6V308c0 17.664 14.336 32 32 32s32-14.336 32-32V160c0-17.664-14.336-32-32-32h-4.8zM383.552 708.8c-114.688 0-208-93.312-208-208s93.312-208 208-208 208 93.312 208 208-93.312 208-208 208z';
-
 export function getZoomToolbox() {
   return {
     feature: {
-      myDataZoom: {
-        show: true,
-        title: '区域缩放',
-        icon: ZOOM_ICON_SVG,
+      dataZoom: {
+        yAxisIndex: 'none',
+        title: {
+          zoom: '区域缩放',
+          back: '还原缩放'
+        },
         iconStyle: {
           borderColor: '#606266'
         },
@@ -69,13 +69,6 @@ export function getZoomToolbox() {
           iconStyle: {
             borderColor: '#409EFF'
           }
-        },
-        onclick: function(event, ecInstance) {
-          ecInstance.dispatchAction({
-            type: 'takeGlobalCursor',
-            key: 'dataZoomSelect',
-            dataZoomSelectActive: true
-          });
         }
       },
       restore: {
@@ -105,15 +98,35 @@ export function getZoomToolbox() {
   };
 }
 
-export function bindToolboxZoom(chartInstance) {
-  chartInstance.on('click', function(params) {
-    if (params.componentType === 'toolbox' && params.name === 'myDataZoom') {
-      chartInstance.dispatchAction({
-        type: 'takeGlobalCursor',
-        key: 'dataZoomSelect',
-        dataZoomSelectActive: true
-      });
+export function hideToolboxBackButton(chart) {
+  if (!chart) return;
+  try {
+    const zr = chart.getZr();
+    if (!zr || !zr.storage) return;
+    const displayList = zr.storage.getDisplayList(true);
+    for (let i = 0; i < displayList.length; i++) {
+      const el = displayList[i];
+      if (el && el.type === 'group' && el.__toolboxFeatureName === 'dataZoom') {
+        const children = el.children();
+        if (children && children.length >= 2) {
+          const backEl = children[1];
+          if (backEl) {
+            backEl.hide();
+          }
+        }
+        break;
+      }
     }
+  } catch (e) {
+    // ignore
+  }
+}
+
+export function bindToolboxZoom(chartInstance) {
+  if (!chartInstance) return;
+  chartInstance.on('rendered', function onRendered() {
+    hideToolboxBackButton(chartInstance);
+    chartInstance.off('rendered', onRendered);
   });
 }
 
@@ -129,19 +142,12 @@ export function enhanceChartOption(option, existingToolbox) {
 
   if (!option.toolbox) {
     option.toolbox = getZoomToolbox();
-  } else if (!option.toolbox.feature) {
-    option.toolbox.feature = getZoomToolbox().feature;
-  } else {
-    const ft = option.toolbox.feature;
-    if (ft.dataZoom) {
-      delete ft.dataZoom;
-    }
-    if (!ft.myDataZoom) {
-      ft.myDataZoom = getZoomToolbox().feature.myDataZoom;
-    }
-    if (!ft.restore) {
-      ft.restore = getZoomToolbox().feature.restore;
-    }
+  } else if (!option.toolbox.feature || !option.toolbox.feature.dataZoom) {
+    option.toolbox.feature = {
+      ...(option.toolbox.feature || {}),
+      dataZoom: getZoomToolbox().feature.dataZoom,
+      restore: getZoomToolbox().feature.restore
+    };
   }
 
   if (option.series) {
