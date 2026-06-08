@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div :id="id" :class="className" :style="{ height: height, width: width }" />
 </template>
   
@@ -40,7 +40,7 @@ export default {
             titleObj: {}
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.clearChart();
     },
     methods: {

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div id="container"></div>
 </template>
 
@@ -176,7 +176,7 @@ export default {
       this.renderer.render(this.scene, this.camera);
     },
   },
-  destroyed() {
+  unmounted() {
     if (this.client != null && this.client.end) {
       this.client.end();
     }

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div :id="id" :class="className"  />
 </template>
 
@@ -59,7 +59,7 @@ export default {
     this.pageInit();
     window.addEventListener("resize", this.handleResize);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.clearChart();
     window.removeEventListener("resize", this.handleResize);
     myCharts && myCharts.dispose();

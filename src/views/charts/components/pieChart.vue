@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div
     class="columnar"
     style="width: 137px; height: 137px"
@@ -42,7 +42,7 @@ export default {
     this.initColumnar();
     window.addEventListener("resize", this.handleResize);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener("resize", this.handleResize);
     this.myChart && this.myChart.dispose();
   },

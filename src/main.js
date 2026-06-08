@@ -24,6 +24,13 @@ import viewgird from './components/basic/ViewGrid';
 import publicTable from './components/publicTable';  //共用表格组件
 import publicForm from './components/publicForm';    //共用表单组件
 import vueSeamless from "vue-seamless-scroll/src";
+if (vueSeamless.beforeDestroy) {
+    vueSeamless.beforeUnmount = vueSeamless.beforeDestroy;
+    delete vueSeamless.beforeDestroy;
+}
+vueSeamless.install = function (app, options = {}) {
+    app.component(options.componentName || vueSeamless.name, vueSeamless)
+}
 const app = createApp(App);
 app.use(DataVVue3);
 //全局方法

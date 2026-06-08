@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div :id="id" :class="className" :style="{ height: height, width: width }" />
 </template>
 
@@ -48,7 +48,7 @@ export default {
       styleArr: [],
     };
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.clearChart();
   },
   methods: {

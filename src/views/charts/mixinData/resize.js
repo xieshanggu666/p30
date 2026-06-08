@@ -1,4 +1,4 @@
-import { debounce } from './tool.js'
+﻿import { debounce } from './tool.js'
 
 export default {
   data() {
@@ -16,7 +16,7 @@ export default {
     this.$_initResizeEvent()
     this.$_initSidebarResizeEvent()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$_destroyResizeEvent()
     this.$_destroySidebarResizeEvent()
   },

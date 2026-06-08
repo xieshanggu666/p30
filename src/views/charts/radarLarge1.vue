@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="map-container">
     <!-- 地图容器 -->
     <div id="map" class="map"></div>
@@ -101,7 +101,7 @@ export default {
       }
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     // 销毁地图实例（可选，释放资源）
     if (this.map) {
       // 清除所有标记点

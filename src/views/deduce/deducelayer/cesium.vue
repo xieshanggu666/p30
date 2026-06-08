@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div class="contaniner">
         <div class="pocx" @click.stop="flys">击视角飞行</div>
         <div id="contain"></div>
@@ -159,7 +159,7 @@ const flys=()=>{
 
 // 组件销毁时清除 地图
 onUnmounted(()=>{
-    if (viewer && !viewer.isDestroyed()) {
+    if (viewer && !viewer.isunmounted()) {
         viewer.destroy();
         console.log('Cesium 查看器已销毁');
     }

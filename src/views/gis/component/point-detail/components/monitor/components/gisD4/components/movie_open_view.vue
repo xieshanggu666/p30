@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <div v-show="!isError">
       <video
@@ -73,7 +73,7 @@ export default {
       );
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     console.log("destroy");
     const videoDom = this.$refs.videoRef; 
     videojs(videoDom).dispose();

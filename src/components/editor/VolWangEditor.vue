@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="hello" ref="volWangEditor"></div>
 </template>
 
@@ -63,7 +63,7 @@ export default {
       this.lastHtml = newVal;
     },
   },
-  destroyed() {
+  unmounted() {
     this.editor = null;
   },
   mounted() {

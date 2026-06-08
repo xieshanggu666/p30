@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="consyt">
       <!-- 头部 -->
       <!-- <div class="contops" >
@@ -565,7 +565,7 @@ export default {
       this.setNowTimes();
     }, 1000);
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener("resize", this.getHeight);
   },
   computed: {

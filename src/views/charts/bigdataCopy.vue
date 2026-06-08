@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="nier_ye">
     <div class="waic_" :style="{ height: starts ? '159px' : '83px' }">
       <div class="herder_s">
@@ -472,7 +472,7 @@ export default {
       this.setNowTimes();
     }, 1000);
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener("resize", this.getHeight);
   },
   computed: {

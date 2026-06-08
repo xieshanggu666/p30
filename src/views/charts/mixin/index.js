@@ -1,4 +1,4 @@
-import block1Img from '@/assets/img/block-1.png';
+﻿import block1Img from '@/assets/img/block-1.png';
 import block2Img from '@/assets/img/block-2.png';
 import block3Img from '@/assets/img/block-3.png';
 import block4Img from '@/assets/img/block-4.png';
@@ -75,7 +75,7 @@ export default {
       this.ChangeCenter()
     }, 4000)
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.timer)
   },
   methods: {

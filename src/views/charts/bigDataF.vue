@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div class="contaners" >
       <div class="miulet">
          <!-- 设备实时情况 -->
@@ -427,7 +427,7 @@
     //     this.onWindowResize();
     //   }, 100);
     },
-    destroyed() {
+    unmounted() {
     //   window.removeEventListener("resize", this.onWindowResize);
       this.stopTimer();
     },
@@ -435,7 +435,7 @@
       clearInterval(scrollTime);
       scrollTime=null;
     },
-    beforeDestroy() {
+    beforeUnmount() {
       this.stopTimer();
     },
     computed: {

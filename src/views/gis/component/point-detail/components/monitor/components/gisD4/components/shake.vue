@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="IndexBox">
     <div id="mainBox" class="mainBox" ref="seller_ref_one"></div>
   </div>
@@ -37,7 +37,7 @@ export default {
   mounted() {
     this.myEchartsFun();
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.timer);
   },
 

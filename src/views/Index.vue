@@ -1068,7 +1068,7 @@ export default defineComponent({
   /**
    * 销毁钩子函数
    */
-  destroyed() {
+  unmounted() {
     $this = null;
     clearInterval($interval);
     clearInterval($audioInterval);

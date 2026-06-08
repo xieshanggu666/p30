@@ -5,6 +5,7 @@ let _patched = false;
 function patchEChartsSetOption() {
   if (_patched) return;
   _patched = true;
+  if (!echarts.ECharts) return;
   const origSetOption = echarts.ECharts.prototype.setOption;
   echarts.ECharts.prototype.setOption = function(option, notMerge, lazyUpdate) {
     const result = origSetOption.call(this, option, notMerge, lazyUpdate);

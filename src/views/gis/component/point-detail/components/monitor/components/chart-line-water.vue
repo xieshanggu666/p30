@@ -1,4 +1,4 @@
-<template>
+﻿<template>
     <div :id="id" :class="className" :style="{ height: height, width: width }" />
 </template>
 
@@ -50,7 +50,7 @@ export default {
     mounted() {
         this.initChart()
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (!this.chart) {
             return
         }

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="com-tree">
     <div id="appLoading">
       <div class="lmask"></div>
@@ -292,7 +292,7 @@ export default {
     this.getHeight();
     this.pointTreeId = this.$store.getters.getTreeValue();
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener("resize", this.getHeight);
   },
   methods: {

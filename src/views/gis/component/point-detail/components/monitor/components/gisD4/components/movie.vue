@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <div v-show="!isError">
       <video
@@ -81,7 +81,7 @@ export default {
       );
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.indexFlag = false;
     console.log(this.indexFlag, "destroy movie");
     // this.getHls("close");

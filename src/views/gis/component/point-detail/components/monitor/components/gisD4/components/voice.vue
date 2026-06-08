@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="IndexBox">
     <div class="pd waveBox">
       <div :class="typeName"></div>
@@ -84,7 +84,7 @@ export default {
     //   // this.value = this.wavesurfer.getVolume() * 100
     // })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.timer);
   },
   methods: {

@@ -1,4 +1,4 @@
-import {
+﻿import {
   mapGetters
 } from "vuex";
 import projectData from "./data.js"
@@ -100,7 +100,7 @@ export default {
 
     };
   },
-   destroyed() {
+   unmounted() {
     clearInterval(this.timer);
   },
   methods: {

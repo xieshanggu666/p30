@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div id="water">
 
     <div class="monitor">
@@ -101,7 +101,7 @@ export default {
       this.DataInit();
     }, 3000)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.clearInterval(this.dataContent);
   },
   methods: {

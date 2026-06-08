@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="d4-box">
     <div class="d4-box-content">
       <div class="d4-box-info">
@@ -236,7 +236,7 @@ export default {
       }
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.indexFlag = false;
     console.log(this.indexFlag, "destroy");
     console.log("destroy");

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="home-contianer">
     <div class="h-top">
       <div class="h-top-left" id="h-chart1">left</div>
@@ -201,7 +201,7 @@ export default {
     });
     return { open };
   },
-  destroyed() {
+  unmounted() {
     $chart2 = null;
   }
 };

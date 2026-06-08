@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="eqos">
     <div class="usit"><i class="el-icon-warning-outline ml12"></i>提示：{{titles}}  </div>
     <div :id="id" :class="className"  />
@@ -64,7 +64,7 @@ export default {
     this.pageInit();
     window.addEventListener("resize", this.handleResize);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.clearChart();
   },
   methods: {
