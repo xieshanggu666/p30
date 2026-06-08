@@ -1,15 +1,25 @@
-// const webpack = require("webpack");
-// 引入等比适配插件
-// const px2rem = require('postcss-px2rem')
-// // 配置基本大小
-// const postcss = px2rem({
-//   // 基准大小 baseSize，需要和rem.js中相同
-//   remUnit: 16
-// })
+const CompressionPlugin = require('compression-webpack-plugin');
+const os = require('os');
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+const productionPlugins = isProduction
+  ? [
+      new CompressionPlugin({
+        algorithm: 'gzip',
+        test: /\.(js|css|html|svg)$/,
+        threshold: 10240,
+        minRatio: 0.8,
+        deleteOriginalAssets: false,
+      }),
+    ]
+  : [];
+
 module.exports = {
   productionSourceMap: false,
-  lintOnSave: true,
-  transpileDependencies: ["vue-draggable-next"],
+  lintOnSave: isProduction ? false : 'warning',
+  transpileDependencies: ['vue-draggable-next'],
+  parallel: os.cpus().length > 1,
   devServer: {
     host: '192.168.1.88',
     port: 9990,
@@ -18,52 +28,97 @@ module.exports = {
       errors: false,
     },
   },
-  // css: {
-  //   //查看CSS属于哪个css文件
-  //   sourceMap: true,
-  //   loaderOptions: {
-  //     postcss: {
-  //       plugins: [
-  //         postcss
-  //       ]
-  //     }
-  //   }
-  // },
   configureWebpack: {
     module: {
       rules: [
         {
           test: /\.mjs$/,
           include: /node_modules/,
-          type: "javascript/auto",
+          type: 'javascript/auto',
         },
       ],
     },
+    plugins: productionPlugins,
+    performance: {
+      hints: isProduction ? 'warning' : false,
+      maxAssetSize: 512000,
+      maxEntrypointSize: 512000,
+    },
   },
-  publicPath: "./",
-  //https://cli.vuejs.org/zh/guide/html-and-static-assets.html#html
+  publicPath: './',
   chainWebpack: (config) => {
-    // 移除 prefetch 插件
-    config.plugins.delete("prefetch");
-    //自下定义title
-    config.plugin("html").tap((args) => {
-      args[0].title = "智慧安全系统";
+    config.plugins.delete('prefetch');
+
+    config.plugin('html').tap((args) => {
+      args[0].title = '智慧安全系统';
       return args;
     });
 
-    // 或者
-    // 修改它的选项：
-    // config.plugin('prefetch').tap(options => {
-    //   options[0].fileBlacklist = options[0].fileBlacklist || []
-    //   options[0].fileBlacklist.push(/myasyncRoute(.)+?\.js$/)
-    //   return options
-    // })
+    config.optimization.splitChunks({
+      chunks: 'all',
+      maxInitialRequests: 20,
+      maxAsyncRequests: 20,
+      minSize: 20000,
+      cacheGroups: {
+        echarts: {
+          name: 'chunk-echarts',
+          test: /[\\/]node_modules[\\/]echarts[\\/]/,
+          priority: 30,
+          reuseExistingChunk: true,
+        },
+        three: {
+          name: 'chunk-three',
+          test: /[\\/]node_modules[\\/](three|three-orbitcontrols-ts)[\\/]/,
+          priority: 30,
+          reuseExistingChunk: true,
+        },
+        elementPlus: {
+          name: 'chunk-element-plus',
+          test: /[\\/]node_modules[\\/]element-plus[\\/]/,
+          priority: 30,
+          reuseExistingChunk: true,
+        },
+        xlsx: {
+          name: 'chunk-xlsx',
+          test: /[\\/]node_modules[\\/]xlsx[\\/]/,
+          priority: 30,
+          reuseExistingChunk: true,
+        },
+        videojs: {
+          name: 'chunk-video',
+          test: /[\\/]node_modules[\\/](video\.js|videojs-contrib-hls|dplayer|hls\.js|@videojs)[\\/]/,
+          priority: 25,
+          reuseExistingChunk: true,
+        },
+        mathjs: {
+          name: 'chunk-mathjs',
+          test: /[\\/]node_modules[\\/]mathjs[\\/]/,
+          priority: 25,
+          reuseExistingChunk: true,
+        },
+        vendors: {
+          name: 'chunk-vendors',
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
+          chunks: 'initial',
+          reuseExistingChunk: true,
+        },
+        common: {
+          name: 'chunk-common',
+          minChunks: 2,
+          priority: 5,
+          reuseExistingChunk: true,
+        },
+      },
+    });
+
+    if (isProduction) {
+      config.optimization.minimize(true);
+      config.optimization.minimizer('terser').tap((args) => {
+        args[0].parallel = os.cpus().length > 1;
+        args[0].extractComments = false;
+        return args;
+      });
+    }
   },
-  // configureWebpack: {
-  //     plugins: [
-  //         new webpack.optimize.MinChunkSizePlugin({
-  //             minChunkSize: 100000 // 通过合并小于 minChunkSize 大小的 chunk，将 chunk 体积保持在指定大小限制以上
-  //         })
-  //     ]
-  // }
 };

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
@@ -47,6 +47,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.24.0",
+    "@babel/runtime-corejs3": "^7.24.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -57,6 +59,7 @@
     "@vue/test-utils": "^2.0.0-0",
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
+    "compression-webpack-plugin": "^6.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^6.8.0",
     "less": "^4.1.1",
@@ -65,7 +68,8 @@
     "sass": "1.26.8",
     "sass-loader": "8.0.2",
     "stylus": "^0.54.7",
-    "stylus-loader": "^3.0.2"
+    "stylus-loader": "^3.0.2",
+    "thread-loader": "^3.0.4"
   },
   "eslintConfig": {
     "root": true,
