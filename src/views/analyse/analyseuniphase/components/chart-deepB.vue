@@ -10,6 +10,7 @@
 import * as echarts from "echarts";
 import { watch, reactive, onUnmounted } from "vue";
 import http from "@/api/http.js";
+import { enhanceSeriesItem, getZoomToolbox } from '@/uitils/chartEnhance'
 const emits = defineEmits(['setDeepList','getkongshen'])
 import { defineEmits } from "vue";
 let currentOffset = 50; // 初始偏移量（50 → -50~50）
@@ -186,30 +187,8 @@ function initChart() {
      
     },
     series: state.series,
-    dataZoom: [
-      // {
-      //   type: 'slider', 
-      //   orient: 'horizontal', 
-      //   xAxisIndex: 0, 
-      //   start: 0,
-      //   end: 100,
-      //   top: '90%',
-      //   left: '10%',
-      //   width: '40%',
-      //   handleSize: 20,
-      //   filterMode: 'none'
-      // },
-      {
-        type: 'inside', 
-        orient: 'horizontal',
-        xAxisIndex: 0,
-        start: 0,
-        end: 100,
-        moveOnMouseMove: true,
-        zoomOnMouseWheel: true,
-        filterMode: 'none'
-      }
-    ]
+    toolbox: getZoomToolbox(),
+    dataZoom: getZoomDataZoom(),
   };
   chart.setOption(option);
   chart.on('dataZoom', (params) => {
@@ -256,6 +235,7 @@ function pageInit() {
           type: "line",
           data: res.data.timeData[index].data.map((item) => [item.x, item.d]),
         };
+        enhanceSeriesItem(singlelineConfig);
         state.series.push(singlelineConfig);
       }
       initChart();

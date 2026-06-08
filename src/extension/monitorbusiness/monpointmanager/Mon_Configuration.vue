@@ -31,7 +31,8 @@
 </template>
 <script>
 import VolBox from "@/components/basic/VolBox.vue";
-import * as echarts from "echarts";
+import * as echarts from "echarts"
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
 
 export default {
   components: { "vol-box": VolBox },
@@ -44,6 +45,8 @@ export default {
       id: "chart",
       width: "1100px",
       height: "500px",
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
       series: [],
       chartParam: {
         legendData: [],
@@ -92,6 +95,8 @@ export default {
         yAxis: {
           type: "value",
         },
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
         series: [
           {
             data: [150, 230, 224, 218, 135, 147, 260],

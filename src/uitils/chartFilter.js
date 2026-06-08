@@ -1,4 +1,5 @@
 import * as echarts from 'echarts'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from './chartEnhance'
 
 const    chartParam = {
     colorArr: [[73, 120, 99], [131, 104, 221], [55, 230, 252], [59, 152, 239], [196, 235, 173], [150, 222, 232], [107, 230, 193], [160, 167, 230]]
@@ -8,6 +9,8 @@ export default function(chartData,filterDataStr){
     const filterData = JSON.parse(filterDataStr);
     result.legend = filterData.map(item =>item.DisplayName);
     result.series = [];
+    result.dataZoom = getZoomDataZoom();
+    result.toolbox = getZoomToolbox();
     for(const [index, filter] of filterData.entries() ){
         let data = chartData.map(item => [item.DataTime, item[filter.FieldName]]);
         let singlelineConfig = {
@@ -52,7 +55,7 @@ export default function(chartData,filterDataStr){
             },
             data
         }
-
+        enhanceSeriesItem(singlelineConfig, chartParam.colorArr[index]);
         result.series.push(singlelineConfig);
     }
     return result;

@@ -6,6 +6,7 @@
 import * as echarts from "echarts";
 import { watch, reactive, onUnmounted } from "vue";
 import http from "@/api/http.js";
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
 let myCharts = null;
 let chart;
 const props = defineProps({
@@ -119,14 +120,8 @@ function initChart() {
       bottom: "0%",
       containLabel: true,
     },
-    dataZoom: [
-      {
-        id: "dataZoomX",
-        type: "inside",
-        xAxisIndex: [0],
-        filterMode: "filter",
-      },
-    ],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     xAxis: [
       {
         // type: 'time',
@@ -217,10 +212,9 @@ function compileData(data) {
       },
       data: brr,
     };
-    // console.log("singlelineConfig", singlelineConfig);
+    enhanceSeriesItem(singlelineConfig, state.chartParam.colorArr[index]);
     state.series.push(singlelineConfig);
   }
-  // console.log(state.series, "state.series");
   initChart();
 }
 function pageInit() {

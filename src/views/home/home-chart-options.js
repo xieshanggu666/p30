@@ -1,3 +1,5 @@
+import { getBarEmphasis, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
+
 var chart1 = {
     title: {
         text: "框架集成及开发环境",
@@ -9,11 +11,11 @@ var chart1 = {
     },
     legend: {
         top: 'bottom',
-        icon: "circle",   //  这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
-        itemWidth: 10,  // 设置宽度
-        itemHeight: 10, // 设置高度
-        itemGap: 7,// 设置间距
-        padding: [0, 0, 15, 0] //图例距离
+        icon: "circle",
+        itemWidth: 10,
+        itemHeight: 10,
+        itemGap: 7,
+        padding: [0, 0, 15, 0]
     },
     series: [
         {
@@ -45,7 +47,6 @@ var chart1 = {
                 { value: 735, name: 'Dapper' },
              
                 { value: 735, name: 'EntityFramework' },
-                // { value: 735, name: 'JWT' },
                 { value: 735, name: 'Redis' },
                 { value: 735, name: 'Vue3.0' },
                 { value: 580, name: 'Vuex' },
@@ -61,13 +62,13 @@ var chart2 = {
     },
     tooltip: {
         trigger: 'axis',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        axisPointer: {
+            type: 'shadow'
         }
     },
     legend: {
         data: ['2.0下载量', '3.0下载量'],
-        padding: [0, 0, 15, 0] //图例距离
+        padding: [0, 0, 15, 0]
     },
     grid: {
         left: '3%',
@@ -76,6 +77,8 @@ var chart2 = {
         top:'13%',
         containLabel: true
     },
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     xAxis: [
         {
             type: 'category',
@@ -96,21 +99,21 @@ var chart2 = {
                 color: 'rgba(180, 180, 180, 0.2)'
             },
             itemStyle: {
-
                 normal: {
                     barBorderRadius: [4, 4, 0, 0]
                 }
             },
+            emphasis: getBarEmphasis(),
             data: [ 730, 620, 420, 932, 701, 834, 890]
         },
         {
             name: '3.0下载量',
             type: 'bar',
-
             showBackground: true,
             backgroundStyle: {
                 color: 'rgba(180, 180, 180, 0.2)'
             },
+            emphasis: getBarEmphasis(),
             data: [230, 210, 120, 132, 101, 134, 90]
         }
     ]
@@ -125,11 +128,11 @@ var chart3 = {
     },
     legend: {
         top: 'bottom',
-        icon: "circle",   //  这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
-        itemWidth: 10,  // 设置宽度
-        itemHeight: 10, // 设置高度
-        itemGap: 7,// 设置间距
-        padding: [0, 0, 10, 0] //图例距离
+        icon: "circle",
+        itemWidth: 10,
+        itemHeight: 10,
+        itemGap: 7,
+        padding: [0, 0, 10, 0]
     },
     series: [
         {
@@ -163,8 +166,7 @@ var chart4={
     tooltip: {
       trigger: 'axis',
       axisPointer: {
-        // Use axis to trigger tooltip
-        type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+        type: 'shadow'
       }
     },
     legend: {},
@@ -175,6 +177,8 @@ var chart4={
         top:'13%',
         containLabel: true
     },
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     xAxis: {
       type: 'value'
     },
@@ -190,9 +194,7 @@ var chart4={
         label: {
           show: true
         },
-        emphasis: {
-          focus: 'series'
-        },
+        emphasis: { focus: 'series', itemStyle: { shadowBlur: 15, shadowColor: 'rgba(0,0,0,0.4)', borderColor: '#fff', borderWidth: 2 } },
         data: [320, 302, 301, 334, 390, 330, 320]
       },
       {
@@ -202,9 +204,7 @@ var chart4={
         label: {
           show: true
         },
-        emphasis: {
-          focus: 'series'
-        },
+        emphasis: { focus: 'series', itemStyle: { shadowBlur: 15, shadowColor: 'rgba(0,0,0,0.4)', borderColor: '#fff', borderWidth: 2 } },
         data: [120, 132, 101, 134, 90, 230, 210]
       },
       {
@@ -214,9 +214,7 @@ var chart4={
         label: {
           show: true
         },
-        emphasis: {
-          focus: 'series'
-        },
+        emphasis: { focus: 'series', itemStyle: { shadowBlur: 15, shadowColor: 'rgba(0,0,0,0.4)', borderColor: '#fff', borderWidth: 2 } },
         data: [220, 182, 191, 234, 290, 330, 310]
       },
       {
@@ -226,9 +224,7 @@ var chart4={
         label: {
           show: true
         },
-        emphasis: {
-          focus: 'series'
-        },
+        emphasis: { focus: 'series', itemStyle: { shadowBlur: 15, shadowColor: 'rgba(0,0,0,0.4)', borderColor: '#fff', borderWidth: 2 } },
         data: [150, 212, 201, 154, 190, 330, 410]
       },
       {
@@ -238,9 +234,7 @@ var chart4={
         label: {
           show: true
         },
-        emphasis: {
-          focus: 'series'
-        },
+        emphasis: { focus: 'series', itemStyle: { shadowBlur: 15, shadowColor: 'rgba(0,0,0,0.4)', borderColor: '#fff', borderWidth: 2 } },
         data: [820, 832, 901, 934, 1290, 1330, 1320]
       }
     ]

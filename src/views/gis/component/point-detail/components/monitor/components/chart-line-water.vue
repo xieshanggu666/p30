@@ -4,6 +4,7 @@
 
 <script>
 import * as echarts from 'echarts'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance"
 import resize from '@/views/gis/mixin/resize'
 
 export default {
@@ -122,6 +123,8 @@ export default {
                         }
                     }
                 }],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
                 series: [{
                     name: '溶解氧',
                     type: 'line',

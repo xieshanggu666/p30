@@ -1,15 +1,13 @@
+import { getLineEmphasis, getBarEmphasis, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
+
 let options= {
     bar:{
-      // title: {
-      //   text: 'World Population'
-      // },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow'
         }
       },
-      // legend: {},
       grid: {
         top:10,
         left: '3%',
@@ -17,6 +15,8 @@ let options= {
         bottom: '3%',
         containLabel: true
       },
+      dataZoom: getZoomDataZoom(),
+      toolbox: getZoomToolbox(),
       xAxis: {
         type: 'value',
         boundaryGap: [0, 0.01]
@@ -29,11 +29,13 @@ let options= {
         {
           name: '2011',
           type: 'bar',
+          emphasis: getBarEmphasis(),
           data: [18203, 23489, 29034, 14970, 31744, 60230]
         },
         {
           name: '2012',
           type: 'bar',
+          emphasis: getBarEmphasis(),
           data: [19325, 23438, 31000, 11594, 24141, 6807]
         }
       ]
@@ -45,10 +47,6 @@ let options= {
       },
       legend: {
         top: 20,
-        // orient: "vertical",
-        // right: 300,
-        // top: 200,
-        // bottom: 20,
         data: [
           "图例1",
           "图例2",
@@ -136,9 +134,20 @@ let options= {
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
+          saveAsImage: {},
+          dataZoom: {
+            yAxisIndex: 'none',
+            title: {
+              zoom: '区域缩放',
+              back: '还原缩放'
+            }
+          },
+          restore: {
+            title: '还原'
+          }
         }
       },
+      dataZoom: getZoomDataZoom(),
       xAxis: {
         type: "category",
         boundaryGap: false,
@@ -168,6 +177,7 @@ let options= {
           itemStyle: {
             color: "rgb(25, 190, 107)"
           },
+          emphasis: getLineEmphasis([25, 190, 107]),
           smooth: true,
           data: [
             7.0,
@@ -191,6 +201,7 @@ let options= {
           itemStyle: {
             color: "rgb(92, 173, 255)"
           },
+          emphasis: getLineEmphasis([92, 173, 255]),
           data: [
             7.0,
             6.9,

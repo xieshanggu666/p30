@@ -4,6 +4,7 @@
   
 <script>
 import * as echarts from 'echarts'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance"
 // import { DASpageMonitorData } from "@/api/page/gis/detail"
 import { tsImportEqualsDeclaration } from '@babel/types';
 
@@ -96,11 +97,8 @@ export default {
                         color: '#999'
                     }
                 },
-                dataZoom: [
-                    {
-                        type: 'inside'
-                    }
-                ],
+                dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),,
                 series: this.series
             })
 

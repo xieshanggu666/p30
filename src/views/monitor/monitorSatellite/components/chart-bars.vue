@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import * as echarts from "echarts";
+import * as echarts from "echarts"
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
 export default {
   watch: {
     getParam() {
@@ -103,11 +104,8 @@ export default {
             color: "#999",
           },
         },
-        dataZoom: [
-          {
-            type: "inside",
-          },
-        ],
+        dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
         series: this.series,
       });
     },
@@ -208,7 +206,8 @@ export default {
 
         data: this.seriesData,
       };
-      this.series.push(seriesAtom);
+      enhanceSeriesItem(seriesAtom);
+          this.series.push(seriesAtom);
       this.initChart();
     },
     clearChart() {

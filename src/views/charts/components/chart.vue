@@ -7,7 +7,8 @@
 </template>
 
 <script setup>
-import * as echarts from "echarts";
+import * as echarts from "echarts"
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
 import { watch, reactive, onUnmounted } from "vue";
 import http from "@/api/http.js";
 let myChart = null;
@@ -127,14 +128,8 @@ function initChart() {
       bottom: "0%",
       containLabel: true,
     },
-    dataZoom: [
-      {
-        id: "dataZoomX",
-        type: "inside",
-        xAxisIndex: [0],
-        filterMode: "filter",
-      },
-    ],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     xAxis: [
       {
         axisLine: {
@@ -250,6 +245,7 @@ function compileData(data) {
 
       data: alarmCounts,
     };
+    enhanceSeriesItem(singlelineConfig, state.chartParam.colorArr[index]);
     state.series.push(singlelineConfig);
   }
   initChart();

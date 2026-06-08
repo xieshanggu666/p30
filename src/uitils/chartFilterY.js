@@ -1,4 +1,6 @@
 import * as _ from 'lodash'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from './chartEnhance'
+
 export default function(data){
     const legendData = data.series.map(sery => sery.displayName)
     const result  ={
@@ -30,18 +32,9 @@ export default function(data){
             bottom: '2%',
             containLabel: true
         },
-        dataZoom: [
-            {
-                id: 'dataZoomX',
-                type: 'inside',
-                xAxisIndex: [0],
-                filterMode: 'filter'
-            }
-
-        ],
+        dataZoom: getZoomDataZoom(),
+        toolbox: getZoomToolbox(),
         xAxis: [{
-            // type: 'time',
-            // boundaryGap: false1,
             axisLine: {
                 lineStyle: {
                     color: '#57617B'
@@ -112,7 +105,7 @@ export default function(data){
             smooth: true,
             symbol: 'circle',
             symbolSize: 5,
-            showSymbol: false,
+            showSymbol: true,
             lineStyle: {
                 width: 3
             },
@@ -121,6 +114,7 @@ export default function(data){
             },
             data: data.series[index].valueList
         }
+        enhanceSeriesItem(singlelineConfig);
         result.series.push(singlelineConfig);
     }
     console.log(result,"result");

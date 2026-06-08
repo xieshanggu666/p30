@@ -7,6 +7,7 @@
 <script>
 //  模拟震动数据
 import * as echarts from 'echarts'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance"
 
 let now = new Date();
 let oneDay = 24 * 3600 * 1000;
@@ -244,6 +245,8 @@ export default {
             show: true,
           },
         },
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
         series: [
           {
             name: "X轴倾斜",

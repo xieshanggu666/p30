@@ -3,7 +3,8 @@
   </template>
   
   <script setup>
-  import * as echarts from "echarts";
+  import * as echarts from "echarts"
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
   import { onMounted,onUnmounted,ref,watch } from "vue";
 
   let myChart = null;
@@ -102,20 +103,18 @@
                 textStyle: {color: "rgba(0,0,0,.8)",margin: 15},
             },    
          },
-         dataZoom: {  //设置可滑动 缩放百分之95的数据
-            type: 'inside',
-            start: 30,
-            end: 100 // 结束位置
-         },
+         dataZoom: getZoomDataZoom(),
+         toolbox: getZoomToolbox(),
          series:  data.seriesData.map(item=>{
-           return {
+           const s = {
             type: 'line',
                 name:item.name,
-                // showSymbol: false,
                 data: item.data,
-                symbolSize: 8,   //设定实心点的大小
-                smooth: true,    //折线是否圆润
-           }
+                symbolSize: 8,
+                smooth: true,
+           };
+           enhanceSeriesItem(s);
+           return s;
          })
         };
         option && myChart.setOption(option,true);

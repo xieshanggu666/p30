@@ -25,7 +25,8 @@ let data1 = [];
 let data2 = [];
 let chart;
 import VolBox from "@/components/basic/VolBox.vue";
-import * as echarts from "echarts";
+import * as echarts from "echarts"
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
 export default {
   components: { "vol-box": VolBox },
   methods: {},
@@ -159,6 +160,9 @@ export default {
             show: true,
           },
         },
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
+    
         series: this.series,
       };
       this.timer = setInterval(function() {

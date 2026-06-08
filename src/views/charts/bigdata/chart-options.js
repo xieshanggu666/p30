@@ -1,4 +1,5 @@
 var echarts = require("echarts");
+var { getLineEmphasis, getBarEmphasis, getZoomDataZoom, getZoomToolbox } = require("@/uitils/chartEnhance");
 let chartLeft1 = {
   tooltip: {
     trigger: "axis",
@@ -13,6 +14,8 @@ let chartLeft1 = {
     bottom: "4%",
     containLabel: true
   },
+  dataZoom: getZoomDataZoom(),
+  toolbox: getZoomToolbox(),
   xAxis: [
     {
       type: "category",
@@ -81,6 +84,7 @@ let chartLeft1 = {
       type: "bar",
       data: [200, 600, 300, 900, 1500, 1200, 600],
       barWidth: "35%",
+      emphasis: getBarEmphasis(),
       itemStyle: {
         normal: {
           color: "#2f89cf",
@@ -107,6 +111,8 @@ let chartLeft2 = {
     bottom: "4%",
     containLabel: true
   },
+  dataZoom: getZoomDataZoom(),
+  toolbox: getZoomToolbox(),
   xAxis: [
     {
       type: "category",
@@ -131,7 +137,6 @@ let chartLeft2 = {
       },
       axisLabel: {
         interval: 0,
-        // rotate:50,
         show: true,
         splitNumber: 15,
         textStyle: {
@@ -200,6 +205,7 @@ let chartLeft2 = {
       name: "销量",
       data: [1200, 800, 300, 500, 560, 220],
       barWidth: "25%",
+      emphasis: getBarEmphasis(),
       itemStyle: {
         normal: {
           color: "#2f89cf",
@@ -212,6 +218,7 @@ let chartLeft2 = {
       name: "订单",
       data: [1000, 750, 380, 450, 450, 120],
       barWidth: "25%",
+      emphasis: getBarEmphasis(),
       itemStyle: {
         normal: {
           color: "#46d000",
@@ -226,8 +233,8 @@ let chartLeft2 = {
 let chartLeft3 = {
   tooltip: {
     trigger: 'axis',
-    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-      type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+    axisPointer: {
+      type: 'shadow'
     }
   },
   grid: {
@@ -237,6 +244,8 @@ let chartLeft3 = {
     bottom: "4%",
     containLabel: true
   },
+  dataZoom: getZoomDataZoom(),
+  toolbox: getZoomToolbox(),
   xAxis: {
     type: 'value',
     axisLabel: {
@@ -300,6 +309,7 @@ let chartLeft3 = {
         position: 'insideRight'
       },
       barWidth: "55%",
+      emphasis: getBarEmphasis(),
       itemStyle: {
         normal: {
           color: "#2f89cf",
@@ -324,7 +334,7 @@ let chartRight1 = {
     }
   },
 
-  color: ["#ffab6f", "#09b916", "#83cddc"], //图例颜色
+  color: ["#ffab6f", "#09b916", "#83cddc"],
   legend: {
     top: "0%",
     icon: "roundRect",
@@ -335,7 +345,13 @@ let chartRight1 = {
     }
   },
   toolbox: {
-    feature: {}
+    feature: {
+      dataZoom: {
+        yAxisIndex: 'none',
+        title: { zoom: '区域缩放', back: '还原缩放' }
+      },
+      restore: { title: '还原' }
+    }
   },
   grid: {
     left: "10",
@@ -344,6 +360,7 @@ let chartRight1 = {
     bottom: "10",
     containLabel: true
   },
+  dataZoom: getZoomDataZoom(),
   xAxis: [
     {
       type: "category",
@@ -403,7 +420,8 @@ let chartRight1 = {
       lineStyle: {
         color: "#45d4ba",
         width: 1
-      }, //线条的样式
+      },
+      emphasis: getLineEmphasis([69, 212, 186]),
       areaStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
@@ -426,7 +444,8 @@ let chartRight1 = {
       lineStyle: {
         color: "#04a710",
         width: 1
-      }, //
+      },
+      emphasis: getLineEmphasis([4, 167, 16]),
       areaStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
@@ -448,8 +467,9 @@ let chartRight1 = {
       lineStyle: {
         color: "#0864c3",
         width: 1
-      }, //线条的样式
+      },
       smooth: true,
+      emphasis: getLineEmphasis([8, 100, 195]),
       areaStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {

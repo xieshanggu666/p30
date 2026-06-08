@@ -3,7 +3,8 @@
 </template>
 
 <script setup>
-import * as echarts from "echarts";
+import * as echarts from "echarts"
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
 import { watch, reactive, onUnmounted } from "vue";
 import http from "@/api/http.js";
 
@@ -37,6 +38,8 @@ watch(
   }
 );
 const state = reactive({
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
   series: [],
   chartData: {},
   chartParam: {
@@ -92,6 +95,8 @@ function initChart() {
     toolbox: {
       show: true,
     },
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     series: [
       {
         name: "监测类型统计",
@@ -139,7 +144,9 @@ function compileData(data) {
   //     },
   //     data: data,
   //   };
-  //   state.series.push(singlelineConfig);
+  //   enhanceSeriesItem(singlelineConfig, state.chartParam.colorArr[index]);
+    enhanceSeriesItem(singlelineConfig);
+    state.series.push(singlelineConfig);
   // }
   initChart();
 }

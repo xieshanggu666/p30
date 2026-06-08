@@ -4,6 +4,7 @@
 
 <script>
 import * as echarts from 'echarts'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance"
 import resize from '@/views/gis/mixin/resize'
 // import { DASsensorData } from "@/api/page/gis/detail"
 
@@ -81,14 +82,8 @@ export default {
                     bottom: '2%',
                     containLabel: true
                 },
-                dataZoom: [
-                    {
-                        id: 'dataZoomX',
-                        type: 'inside',
-                        xAxisIndex: [0],
-                        filterMode: 'filter'
-                    }
-                ],
+                dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),,
                 xAxis: [{
                     type: 'time',
                     boundaryGap: false,
@@ -127,7 +122,8 @@ export default {
                     data
                 }
 
-                this.series.push(singlelineConfig);
+                enhanceSeriesItem(singlelineConfig, this.chartParam.colorArr[index]);
+          this.series.push(singlelineConfig);
             }
 
             this.initChart()

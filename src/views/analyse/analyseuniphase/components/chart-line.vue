@@ -7,6 +7,7 @@ import * as echarts from "echarts";
 import { watch, reactive, onUnmounted,onMounted,ref } from "vue";
 import http from "@/api/http.js";
 import { evaluate,format } from 'mathjs'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
 let myCharts = null;
 let chart;
 const unitshow = ref(true);
@@ -122,14 +123,8 @@ function initChart() {
       },
     },
     grid: state.grid,
-    dataZoom: [
-      {
-        id: "dataZoomX",
-        type: "inside",
-        xAxisIndex: [0],
-        filterMode: "filter",
-      },
-    ],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     xAxis: [
       {
         //type: 'category',
@@ -252,6 +247,7 @@ function compileData(data) {
       },
       data: data[index].valueList,
     };
+    enhanceSeriesItem(singlelineConfig, state.chartParam.colorArr[index]);
     state.series.push(singlelineConfig);
   }
   // console.log(state.series, "state.series");

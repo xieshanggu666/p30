@@ -4,7 +4,8 @@
 </template>
 
 <script setup>
-import * as echarts from "echarts";
+import * as echarts from "echarts"
+import { enhanceSeriesItem, getBarEmphasis, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
 import { watch, reactive, onUnmounted } from "vue";
 import http from "@/api/http.js";
 
@@ -108,6 +109,8 @@ function initChart() {
         },
       },
     ],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     series: [
       {
         name: "预警数",
@@ -119,14 +122,15 @@ function initChart() {
             return data.value;
           },
           textStyle: {
-            color: "#FFFFFF", // 标签字体颜色
-            fontSize: 14, // 标签字体大小
-            fontWeight: "bold", // 标签字体加粗
-            fontStyle: "italic", // 标签字体斜体
-            fontFamily: "Arial", // 标签字体
+            color: "#FFFFFF",
+            fontSize: 14,
+            fontWeight: "bold",
+            fontStyle: "italic",
+            fontFamily: "Arial",
           },
         },
         barWidth: "60%",
+        emphasis: getBarEmphasis(),
         data: [10, 52, 102, 104, 110, 12],
         itemStyle: {
           color: {
@@ -173,6 +177,7 @@ function compileData(data) {
       },
       data: data,
     };
+    enhanceSeriesItem(singlelineConfig, state.chartParam.colorArr[index]);
     state.series.push(singlelineConfig);
   }
   initChart();

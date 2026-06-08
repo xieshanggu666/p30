@@ -281,7 +281,7 @@
       v-model="modifyOptions.model"
       title="修改密码"
     >
-      <div style="padding:10px;20px;">
+      <div style="padding:10px 20px;">
         <VolForm
           ref="pwd"
           :formRules="modifyOptions.data"

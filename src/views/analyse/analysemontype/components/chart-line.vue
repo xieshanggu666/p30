@@ -6,6 +6,7 @@
 import * as echarts from "echarts";
 import { watch, reactive, onUnmounted, onMounted, nextTick,defineEmits } from "vue";
 import http from "@/api/http.js";
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
 
 let myChart = null;
 const emit = defineEmits(['getDianList']);
@@ -145,14 +146,8 @@ function initChart() {
       bottom: "2%",
       containLabel: true,
     },
-    dataZoom: [
-      {
-        id: "dataZoomX",
-        type: "inside",
-        xAxisIndex: [0],
-        filterMode: "filter",
-      },
-    ],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     xAxis: [
       {
         axisLine: {
@@ -237,6 +232,7 @@ function compileData(data) {
       },
       data: item.valueList,
     };
+    enhanceSeriesItem(singlelineConfig, color);
     state.series.push(singlelineConfig);
   }
   // 确保DOM已渲染再初始化

@@ -6,6 +6,7 @@
   
 <script>
 import * as echarts from 'echarts'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance"
 // import { DASpageMonitorData } from "@/api/page/gis/detail"
 
 export default {
@@ -141,6 +142,9 @@ export default {
                         }
                     }
                 }],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
+    
                 series: this.series
             })
         },
@@ -183,7 +187,8 @@ export default {
                     },
                     data: rootData.map(item => item[this.CompilechartsData(legend)])
                 }
-                this.series.push(singlelineConfig);
+                enhanceSeriesItem(singlelineConfig, this.chartParam.colorArr[index]);
+          this.series.push(singlelineConfig);
             }
 
             this.initChart()

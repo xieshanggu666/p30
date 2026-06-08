@@ -4,6 +4,7 @@
   
 <script>
 import * as echarts from 'echarts'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance"
 
 export default {
     watch: {
@@ -63,14 +64,8 @@ export default {
             chart.setOption({
               
                 backgroundColor: '#394056',
-                dataZoom: [
-                    {
-                        type: 'slider'
-                    },
-                    {
-                        type: 'inside'
-                    }
-                ],
+                dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {

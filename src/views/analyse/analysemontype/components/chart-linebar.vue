@@ -4,6 +4,7 @@
 
 <script>
 import * as echarts from "echarts";
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
 export default {
   watch: {
     getParam() {
@@ -148,14 +149,8 @@ export default {
             minInterval: 1,
           },
         ],
-        dataZoom: [
-          {
-            id: "dataZoomX",
-            type: "inside",
-            xAxisIndex: [0],
-            filterMode: "filter",
-          },
-        ],
+        dataZoom: getZoomDataZoom(),
+        toolbox: getZoomToolbox(),
         series: this.series,
       };
       chart.setOption(option);
@@ -180,6 +175,7 @@ export default {
             },
             data: data[index].valueList,
           };
+          enhanceSeriesItem(singlelineConfig);
           this.series.push(singlelineConfig);
         } else {
           let singlelineConfig1 = {
@@ -200,6 +196,7 @@ export default {
               },
             },
           };
+          enhanceSeriesItem(singlelineConfig1, this.chartParam.colorArr[index]);
           this.series.push(singlelineConfig1);
         }
       }

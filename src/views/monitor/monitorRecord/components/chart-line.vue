@@ -3,7 +3,8 @@
 </template>
 
 <script setup>
-import * as echarts from "echarts";
+import * as echarts from "echarts"
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from "@/uitils/chartEnhance";
 import { watch, reactive, onUnmounted, onMounted } from "vue";
 import http from "@/api/http.js";
 
@@ -120,14 +121,8 @@ function initChart() {
       bottom: "2%",
       containLabel: true,
     },
-    dataZoom: [
-      {
-        id: "dataZoomX",
-        type: "inside",
-        xAxisIndex: [0],
-        filterMode: "filter",
-      },
-    ],
+    dataZoom: getZoomDataZoom(),
+    toolbox: getZoomToolbox(),
     xAxis: [
       {
         // type: 'time',
@@ -229,6 +224,7 @@ function compileData(data) {
       },
       data: data[index].valueList,
     };
+    enhanceSeriesItem(singlelineConfig, state.chartParam.colorArr[index]);
     state.series.push(singlelineConfig);
   }
   initChart();
