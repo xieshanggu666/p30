@@ -12,7 +12,7 @@ import { watch, reactive, onUnmounted } from "vue";
 import http from "@/api/http.js";
 import { max } from "moment";
 import { defineEmits } from "vue";
-import { enhanceSeriesItem, getZoomToolbox } from '@/uitils/chartEnhance'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
 let currentOffset = 50; // 初始偏移量（50 → -50~50）
 let chart;
 

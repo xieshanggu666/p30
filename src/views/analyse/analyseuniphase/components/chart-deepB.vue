@@ -10,7 +10,7 @@
 import * as echarts from "echarts";
 import { watch, reactive, onUnmounted } from "vue";
 import http from "@/api/http.js";
-import { enhanceSeriesItem, getZoomToolbox } from '@/uitils/chartEnhance'
+import { enhanceSeriesItem, getZoomDataZoom, getZoomToolbox } from '@/uitils/chartEnhance'
 const emits = defineEmits(['setDeepList','getkongshen'])
 import { defineEmits } from "vue";
 let currentOffset = 50; // 初始偏移量（50 → -50~50）
