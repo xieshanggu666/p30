@@ -59,7 +59,11 @@ export function getZoomToolbox() {
       dataZoom: {
         yAxisIndex: 'none',
         title: {
-          zoom: '区域缩放'
+          zoom: '区域缩放',
+          back: ''
+        },
+        icon: {
+          back: 'path://M0,0Z'
         },
         iconStyle: {
           borderColor: '#606266'
@@ -82,7 +86,7 @@ export function getZoomToolbox() {
         }
       }
     },
-    left: 'center',
+    left: 80,
     top: 0,
     itemSize: 16,
     itemGap: 12,
@@ -115,6 +119,10 @@ export function enhanceChartOption(option, existingToolbox) {
       dataZoom: getZoomToolbox().feature.dataZoom,
       restore: getZoomToolbox().feature.restore
     };
+  } else if (option.toolbox.feature && option.toolbox.feature.dataZoom) {
+    const dz = option.toolbox.feature.dataZoom;
+    dz.title = { ...(dz.title || {}), back: '' };
+    dz.icon = { ...(dz.icon || {}), back: 'path://M0,0Z' };
   }
 
   if (option.series) {
