@@ -49,22 +49,6 @@ export function getZoomDataZoom(xAxisIndex = 0) {
       type: 'inside',
       xAxisIndex: [xAxisIndex],
       filterMode: 'filter'
-    },
-    {
-      type: 'slider',
-      xAxisIndex: [xAxisIndex],
-      filterMode: 'filter',
-      height: 20,
-      bottom: 5,
-      borderColor: 'transparent',
-      backgroundColor: 'rgba(47,69,84,0.1)',
-      fillerColor: 'rgba(47,69,84,0.2)',
-      handleStyle: {
-        color: '#57617B'
-      },
-      textStyle: {
-        color: '#999'
-      }
     }
   ];
 }
@@ -75,18 +59,40 @@ export function getZoomToolbox() {
       dataZoom: {
         yAxisIndex: 'none',
         title: {
-          zoom: '区域缩放',
-          back: '还原缩放'
+          zoom: '区域缩放'
+        },
+        iconStyle: {
+          borderColor: '#606266'
+        },
+        emphasis: {
+          iconStyle: {
+            borderColor: '#409EFF'
+          }
         }
       },
       restore: {
-        title: '还原'
+        title: '还原',
+        iconStyle: {
+          borderColor: '#606266'
+        },
+        emphasis: {
+          iconStyle: {
+            borderColor: '#409EFF'
+          }
+        }
       }
     },
-    right: 10,
+    left: 'center',
     top: 0,
+    itemSize: 16,
+    itemGap: 12,
     iconStyle: {
-      borderColor: '#999'
+      borderColor: '#606266'
+    },
+    emphasis: {
+      iconStyle: {
+        borderColor: '#409EFF'
+      }
     }
   };
 }
@@ -123,12 +129,12 @@ export function enhanceChartOption(option, existingToolbox) {
 }
 
 function mergeDataZoom(existing) {
-  const hasSlider = existing.some(z => z.type === 'slider');
-  if (hasSlider) return existing;
-
   const hasInside = existing.some(z => z.type === 'inside');
-  if (hasInside) {
-    return [...existing, getZoomDataZoom()[1]];
+  if (hasInside) return existing;
+
+  const hasSlider = existing.some(z => z.type === 'slider');
+  if (hasSlider) {
+    return existing.map(z => z.type === 'slider' ? getZoomDataZoom()[0] : z);
   }
 
   return getZoomDataZoom();

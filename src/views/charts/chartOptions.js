@@ -132,21 +132,7 @@ let options= {
         bottom: "3%",
         containLabel: true
       },
-      toolbox: {
-        feature: {
-          saveAsImage: {},
-          dataZoom: {
-            yAxisIndex: 'none',
-            title: {
-              zoom: '区域缩放',
-              back: '还原缩放'
-            }
-          },
-          restore: {
-            title: '还原'
-          }
-        }
-      },
+      toolbox: getZoomToolbox(),
       dataZoom: getZoomDataZoom(),
       xAxis: {
         type: "category",
