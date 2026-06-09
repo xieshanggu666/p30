@@ -213,7 +213,7 @@ export default {
         .post("/api/Mon_Point_Manager/getPageData", param, true)
         .then((result) => {
           this.options_id = treeId.Point_Num;
-          this.getMonitorData(this.options_id);
+          // this.getMonitorData(this.options_id);
           this.getSatelliteData(this.options_id);
         });
     },
